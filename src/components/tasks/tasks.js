@@ -1,14 +1,14 @@
 import './tasks.css';
-export default function Tasks() {
+export default function Tasks({complete, task, created}) {
     return (
         <>
             <div className="tasks">
                 <div className="div-checkbox">
-                    <input type="checkbox" name="myCheckbox" />
+                    <input type="checkbox" name="myCheckbox" defaultChecked={complete} />
                 </div>
 
                 <div className="div-task">
-                    <p>Tarea1</p>
+                    <p>{task}</p>
                 </div>
 
                 <div className="div-buttons">
