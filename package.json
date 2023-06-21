@@ -11,17 +11,6 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/federicobadan/To-Do-App-Frontend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/federicobadan/To-Do-App-Frontend/issues"
-  },
-  "homepage": "https://github.com/federicobadan/To-Do-App-Frontend#readme",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
