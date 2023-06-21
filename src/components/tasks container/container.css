@@ -1,8 +1,16 @@
-.app {
-    display:flex;
-    flex-direction:column;
 
-}
 .title {
-    margin:auto;   
+    margin:auto;
+    width:50%;
+}
+.title h1 {
+    width:50%;
+    margin: 25px auto auto auto;
+}
+.container-tasks{
+    width: 50%;
+    margin: auto;
+    outline:2px solid black;
+    border-radius: 5px;
+    outline-offset: 0.5rem;
 }
