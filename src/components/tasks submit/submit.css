@@ -1,0 +1,26 @@
+.submit {
+    margin: 50px auto 50px auto;
+    width: 50%;
+    outline:2px solid black;
+    border-radius: 5px;
+    outline-offset: 0.5rem;
+}
+.submit-label {
+    margin-bottom: 20px;
+}
+.submit-label label {
+    font-size: 25px;
+}
+.submit-input {
+    display:flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+}
+.submit-input input {
+    width:80%;
+    margin:2px;
+}
+.submit-input button {
+    width:20%;
+    margin:2px;
+}

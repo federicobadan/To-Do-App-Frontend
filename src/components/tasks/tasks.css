@@ -1,0 +1,29 @@
+
+.tasks {
+    width: 50%;
+    margin:auto;
+    display:flex;
+    flex-direction:row;
+
+}
+
+.div-checkbox {
+    width: 5%;
+}
+.div-checkbox input {
+    margin: 5px;
+}
+.div-task{ 
+    width: 70%;
+}
+.div-task p {
+    margin:0;
+}
+.div-buttons {
+    width:25%;    
+}
+.div-buttons button {
+    width: 50%;
+}
+
+
