@@ -2,51 +2,74 @@ import './container.css';
 import Tasks from '../tasks/tasks';
 import Submit from '../tasks submit/submit';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import xtype from 'xtypejs';
+// import axios from 'axios';
+// import xtype from 'xtypejs';
+import db from '../../db.json'
     
 
 export default function Container() {
     
-    // const [tasks, setTasks] = useState();
-    // const [error, setError] = useState();
-    // const getTasks = async () => {
-    //     let response = [];
+    const [tasks, setTasks] = useState();
+    const [error, setError] = useState();
+    const getTasks = async () => {
+        let response = [];
+        try{
+            response = db;
+        }
+        catch (error) {
+            console.error(error.toJSON());
+            setError(error.toJSON());
+        }
+        finally {
+            setTasks(response);
+            console.log(response)
+        }
+    };
+
+    useEffect(() => {
+        getTasks();
+    }, []); 
+
+    // const updateCompleted = async (id, completed) => {
+    //     let response = null;
     //     try{
-    //         response = await axios.get('http://localhost:3001/tasks');
+    //         response = await axios.patch(`http://localhost:3001/task/${id}`, { completed: !completed });
     //     }
     //     catch (error) {
-    //         console.error(error.toJSON());
-    //         setError(error.toJSON());
+    //         console.error(error);
     //     }
     //     finally {
-    //         setTasks(response.data);
+    //         console.log(response)
     //     }
     // };
 
-    // useEffect(() => {
-    //     getTasks();
-    // }, []); 
-    console.log()
-    // const tasks = useFetch ({url:'http://localhost:3001/tasks'});
-    const [data, setData] = useState();
-    const getData = (options) => {
-        useEffect (()=>{
-            fetch(options.url)
-            .then((response) => response.json)
-            .then((json)=>setData(json))
-        }, []);
-        return {
-            data,
-        };
+    const updateCompleted = (id, completed) => {
+        const newTasks = [];
+        
+        tasks.map( (task) => {
+            if (task.id===id) task.completed= !task.completed;
+            newTasks.push(task)
+        });
+        setTasks(newTasks);
+        console.log(tasks);
+
+    };
+    const deleteTask = (id) => {
+        const newTasks = [];
+        
+        tasks.map( (task) => {
+            if (task.id!==id) newTasks.push(task);
+        });
+        setTasks(newTasks);
+        console.log(tasks);
     }
-    const tasks = getData({url:'http://localhost:3001/tasks'});
+
     return (
         <>
             {error ? 
             <>
-            <p>Aplicación fuera de servicio</p>
-            <p>Código: {error.code}</p>
+                <p>Aplicación fuera de servicio</p>
+                <p>Código: {error.code}</p>
             </>: null}
             {tasks ? 
             <>
@@ -57,8 +80,8 @@ export default function Container() {
                     <Submit />
                     <div className="container-tasks">
                         
-                        {tasks.map( (x) => (
-                            <Tasks key={x.id} id={x.id} flag={x.flag} task={x.task} created={x.created_date} />
+                        {tasks.map( (task) => (
+                            <Tasks key={task.id} task={task} toggleCompleted={updateCompleted} deleteTask={deleteTask} />
                             )
                         )}
 

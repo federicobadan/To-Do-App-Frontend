@@ -1,44 +1,39 @@
 import './tasks.css';
-//import { useState} from 'react';
-//import { useEffect } from 'react';
-import axios from 'axios';
+// import { useState} from 'react';
+// import { useEffect } from 'react';
+// import axios from 'axios';
 
-export default function Tasks({id, flag, task, created}) {
+export default function Tasks({task, toggleCompleted, deleteTask}) {
 
-    //const [completed, setCompleted] = useState(flag);
-    let completed = flag;
+    // const [completed, setCompleted] = useState(flag);
+    let completed = task.completed;
     
-    const updateCompleted = async () => {
-        let response = null;
-        try{
-            response = await axios.patch(`http://localhost:3001/task/${id}`, { flag: completed });
-        }
-        catch (error) {
-            console.error(error);
-        }
-        finally {
-            console.log(response.data)
-        }
-    };
+    // const updateCompleted = async () => {
+    //     let response = null;
+    //     try{
+    //         response = await axios.patch(`http://localhost:3001/task/${task.id}`, { completed: task.completed });
+    //     }
+    //     catch (error) {
+    //         console.error(error);
+    //     }
+    //     finally {
+    //         setCompleted(!completed);
+    //         console.log(response)
+    //     }
+    // };
 
     const  handleCheckbox = () => {
-        //setCompleted(!completed);
-        completed = !completed;
-        updateCompleted();
+        toggleCompleted(task.id);
     }
 
-    // useEffect(() => {
-    //     updateCompleted();
-    //     console.log(`useEffect update`)
-    //   }, [completed]);
 
     const editTask = () => {
 
     }
 
 
-    const deleteTask = () => {
-        created = [];
+    const  deleteComponent = (id) => {
+        deleteTask(id);
     }
     // const deleteComponent = async () => {
     //     let response=null;
@@ -48,10 +43,12 @@ export default function Tasks({id, flag, task, created}) {
     //     catch (error) {
     //         console.error(error);
     //     }
+    //     finally {
+    //         console.log(response.data)
+    //     }
     // }
-    // useEffect(() => {
-    //     deleteComponent();
-    //   }, [created]);
+
+
 
     return (
         <>
@@ -62,12 +59,12 @@ export default function Tasks({id, flag, task, created}) {
                 </div>
 
                 <div className="div-task">
-                    <p>{task}</p>
+                    <p>{task.task}</p>
                 </div>
 
                 <div className="div-buttons">
                     <button onClick={editTask()}>Editar</button>
-                    <button onClick={deleteTask()}>Borrar</button>
+                    <button onClick={() => deleteComponent(task.id)}>Borrar</button>
                 </div>
             </div>
         </>
