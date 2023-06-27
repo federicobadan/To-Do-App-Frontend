@@ -19,7 +19,6 @@ export default function Submit({addTask, lastId}) {
     useEffect(() => {
         const element = ref.current;
         const handleEnter = (event) => {
-            console.log(ref)
             if(event.key==='Enter'){
                 event.preventDefault();
                 onAddTask(task)
@@ -27,9 +26,9 @@ export default function Submit({addTask, lastId}) {
         }
         element.addEventListener('keypress', handleEnter);
         return () => {
-            element.removeEventListener('click', handleEnter);
+            element.removeEventListener('keypress', handleEnter);
           };
-      }, []);
+      }, [task]);
 
     return (
         <>
