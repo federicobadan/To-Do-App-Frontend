@@ -4,50 +4,24 @@ import Submit from "../tasks submit/submit";
 // import { useEffect } from 'react';
 // import axios from 'axios';
 
+
 export default function Tasks({task, toggleCompleted, deleteTask, editTask}) {
 
     const [isEditing, setIsEditing] = useState(false);
-    let completed = task.completed;
-
-    // const updateCompleted = async () => {
-    //     let response = null;
-    //     try{
-    //         response = await axios.patch(`http://localhost:3001/task/${task.id}`, { completed: task.completed });
-    //     }
-    //     catch (error) {
-    //         console.error(error);
-    //     }
-    //     finally {
-    //         setCompleted(!completed);
-    //         console.log(response)
-    //     }
-    // };
+    let completed = task.flag;
 
     const handleCheckbox = () => {
-        toggleCompleted(task.id);
+        toggleCompleted(task.id, completed);
     }
 
     const deleteComponent = (id) => {
         deleteTask(id);
     }
-    // const deleteComponent = async () => {
-    //     let response=null;
-    //     try{
-    //      response = await axios.delete(`http://localhost:3001/task/${id}`)
-    //     }
-    //     catch (error) {
-    //         console.error(error);
-    //     }
-    //     finally {
-    //         console.log(response.data)
-    //     }
-    // }
+
 
     const handleOnEditing = () => {
         setIsEditing(!isEditing);
     }
-
-
 
     return (
         <>
