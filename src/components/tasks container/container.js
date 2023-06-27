@@ -51,7 +51,6 @@ export default function Container() {
             newTasks.push(task)
         });
         setTasks(newTasks);
-        console.log(tasks);
 
     };
     const deleteTask = (id) => {
@@ -61,7 +60,14 @@ export default function Container() {
             if (task.id!==id) newTasks.push(task);
         });
         setTasks(newTasks);
-        console.log(tasks);
+    }
+    const addTask = (task) => {
+        const newTasks = [];
+        tasks.map( (task) => {
+            newTasks.push(task);
+        });
+        newTasks.push(task);
+        setTasks(newTasks);
     }
 
     return (
@@ -77,7 +83,7 @@ export default function Container() {
                     <h1>To do App</h1>
                 </div>
                 <div className='container'>
-                    <Submit />
+                    <Submit addTask={addTask} lastId={tasks.slice(-1)[0].id}  />
                     <div className="container-tasks">
                         
                         {tasks.map( (task) => (
