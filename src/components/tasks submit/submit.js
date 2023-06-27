@@ -2,7 +2,7 @@ import './submit.css';
 import {useState, useEffect, useRef} from 'react';
 
 
-export default function Submit({addTask, lastId}) {
+export default function Submit({addTask, lastId, editTask, currentId, isEditing, changeOnEdit}) {
     const ref = useRef(null);
     const [task, setTask] = useState('');
     const [count, setCount] = useState(lastId)
@@ -16,12 +16,17 @@ export default function Submit({addTask, lastId}) {
         setCount(count+1)
     }
 
+    const onEditTask = () => {
+        editTask(currentId, task)
+        changeOnEdit()
+    }
+
     useEffect(() => {
         const element = ref.current;
         const handleEnter = (event) => {
             if(event.key==='Enter'){
                 event.preventDefault();
-                onAddTask(task)
+                isEditing ? onEditTask() : onAddTask(task);
             }
         }
         element.addEventListener('keypress', handleEnter);
@@ -30,16 +35,12 @@ export default function Submit({addTask, lastId}) {
           };
       }, [task]);
 
+
     return (
         <>
-            <div className="submit">
-                <div className="submit-label">
-                    <label>¿Qué tarea deseas agregar?</label>
-                </div>
-                <div className="submit-input">
-                    <input ref={ref} name="myInput" value={task} onChange={onChange} />
-                    <button onClick={() => onAddTask(task)}>Enviar</button>
-                </div>
+            <div className="submit-input">
+                <input ref={ref} name="myInput" value={task} onChange={onChange} />
+                <button onClick={isEditing ? () => onEditTask() : () => onAddTask(task)}>{isEditing ? "Editar" : "Enviar"}</button>
             </div>
         </>
     )

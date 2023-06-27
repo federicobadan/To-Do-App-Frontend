@@ -1,13 +1,14 @@
 import './tasks.css';
-// import { useState} from 'react';
+import {useState} from 'react';
+import Submit from "../tasks submit/submit";
 // import { useEffect } from 'react';
 // import axios from 'axios';
 
-export default function Tasks({task, toggleCompleted, deleteTask}) {
+export default function Tasks({task, toggleCompleted, deleteTask, editTask}) {
 
-    // const [completed, setCompleted] = useState(flag);
+    const [isEditing, setIsEditing] = useState(false);
     let completed = task.completed;
-    
+
     // const updateCompleted = async () => {
     //     let response = null;
     //     try{
@@ -22,17 +23,11 @@ export default function Tasks({task, toggleCompleted, deleteTask}) {
     //     }
     // };
 
-    const  handleCheckbox = () => {
+    const handleCheckbox = () => {
         toggleCompleted(task.id);
     }
 
-
-    const editTask = () => {
-
-    }
-
-
-    const  deleteComponent = (id) => {
+    const deleteComponent = (id) => {
         deleteTask(id);
     }
     // const deleteComponent = async () => {
@@ -48,25 +43,32 @@ export default function Tasks({task, toggleCompleted, deleteTask}) {
     //     }
     // }
 
+    const handleOnEditing = () => {
+        setIsEditing(!isEditing);
+    }
+
 
 
     return (
         <>
-            <div className="tasks">
+            {isEditing ?
+                <Submit editTask={editTask} currentId={task.id} isEditing={isEditing} changeOnEdit={handleOnEditing}/>
+                :
+                <div className="tasks">
 
-                <div className="div-checkbox">
-                    <input type="checkbox" name="myCheckbox" defaultChecked={completed} onClick={handleCheckbox} />
-                </div>
+                    <div className="div-checkbox">
+                        <input type="checkbox" name="myCheckbox" defaultChecked={completed} onClick={handleCheckbox}/>
+                    </div>
 
-                <div className="div-task">
-                    <p>{task.task}</p>
-                </div>
+                    <div className="div-task">
+                        <p>{task.task}</p>
+                    </div>
 
-                <div className="div-buttons">
-                    <button onClick={editTask()}>Editar</button>
-                    <button onClick={() => deleteComponent(task.id)}>Borrar</button>
-                </div>
-            </div>
+                    <div className="div-buttons">
+                        <button onClick={handleOnEditing}>Editar</button>
+                        <button onClick={() => deleteComponent(task.id)}>Borrar</button>
+                    </div>
+                </div>}
         </>
     )
 };

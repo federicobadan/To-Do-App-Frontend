@@ -70,6 +70,16 @@ export default function Container() {
         setTasks(newTasks);
     }
 
+    const editTask = (id, newTask) => {
+        const newTasks = [];
+
+        tasks.map( (task) => {
+            if (task.id===id) task.task = newTask;
+            newTasks.push(task)
+        });
+        setTasks(newTasks);
+    }
+
     return (
         <>
             {error ? 
@@ -83,14 +93,17 @@ export default function Container() {
                     <h1>To do App</h1>
                 </div>
                 <div className='container'>
-                    <Submit addTask={addTask} lastId={tasks.slice(-1)[0].id}  />
+                    <div className="submit">
+                        <div className="submit-label">
+                            <label>¿Qué tarea deseas agregar?</label>
+                        </div>
+                        <Submit addTask={addTask} lastId={tasks.slice(-1)[0].id}  />
+                    </div>
                     <div className="container-tasks">
-                        
                         {tasks.map( (task) => (
-                            <Tasks key={task.id} task={task} toggleCompleted={updateCompleted} deleteTask={deleteTask} />
+                            <Tasks key={task.id} task={task} toggleCompleted={updateCompleted} deleteTask={deleteTask} editTask={editTask}/>
                             )
                         )}
-
                     </div>
                 </div>
             </>: null}
