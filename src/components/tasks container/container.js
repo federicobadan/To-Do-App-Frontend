@@ -20,7 +20,6 @@ export default function Container() {
             setError(error.toJSON());
         }
         finally {
-            response.data.sort(function(a, b){return b.id - a.id});
             setTasks(response.data);
             console.log(response.data)
         }
