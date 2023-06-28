@@ -2,17 +2,15 @@ import './submit.css';
 import {useState, useEffect, useRef} from 'react';
 
 
-export default function Submit({addTask, lastId, currentId, editTask, isEditing, changeOnEdit}) {
+export default function Submit({addTask, currentId, editTask, isEditing, changeOnEdit}) {
     const ref = useRef(null);
     const [task, setTask] = useState('');
-    const [count, setCount] = useState(lastId)
     const onChange = (event) =>{
         setTask(event.target.value)
     }
     const onAddTask = (task) => {
-        addTask({task: task, id:count+1});
+        addTask({task: task});
         setTask('');
-        setCount(count+1)
     }
 
     const onEditTask = () => {
@@ -32,7 +30,7 @@ export default function Submit({addTask, lastId, currentId, editTask, isEditing,
         return () => {
             element.removeEventListener('keypress', handleEnter);
           };
-      }, [task, isEditing, onAddTask, onEditTask]);
+      }, [task]);
 
     return (
         <>

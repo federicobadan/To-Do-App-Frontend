@@ -3,12 +3,12 @@ import Tasks from '../tasks/tasks';
 import Submit from '../tasks submit/submit';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import xtype from 'xtypejs';
+import xtype from 'xtypejs';
     
 
 export default function Container() {
     let isMounted = false;
-    const [tasks, setTasks] = useState();
+    const [tasks, setTasks] = useState([]);
     const [error, setError] = useState();
     const getTasks = async () => {
         let response = [];
@@ -42,14 +42,12 @@ export default function Container() {
         if (isMounted ===false){
             getTasks();
         }
-        isMounted = true;
         return () => {
             // cancel the request before component unmounts
             source.cancel();
-            isMounted = true;
+            isMounted=true;
           };
     }, []); 
-
 
     const updateCompleted = async (id, flag) => {
         const newTasks = [];
@@ -72,24 +70,29 @@ export default function Container() {
     const deleteTask = async (id) => {
         let response=null;
         try{
-         response = await axios.delete(`http://localhost:3001/task/${id}`)
+            response = await axios.delete(`http://localhost:3001/task/${id}`)
         }
         catch (error) {
             console.error(error);
         }
         finally {
             const newTasks = [];
-            tasks.map( (task) => {
-                if (task.id!==id) newTasks.push(task);
-            });
-            setTasks(newTasks);
+            if ((xtype(tasks))==='multi_prop_object'){
+                setTasks(newTasks)
+            }
+            else {
+                tasks.map( (task) => {
+                    if (task.id!==id) newTasks.push(task);
+                });
+                setTasks(newTasks);
+            }
         }
     }
 
-    const addTask = async (task, id) => {
+    const addTask = async (task) => {
         let response=null;
         try{
-         response = await axios.post(`http://localhost:3001/task/${id}`, {task:`${task.task}`})
+            response = await axios.post(`http://localhost:3001/task`, {task:`${task.task}`})
         }
         catch (error) {
             console.error(error);
@@ -99,7 +102,7 @@ export default function Container() {
             tasks.map( (task) => {
                 newTasks.push(task);
             });
-            newTasks.push(task);
+            newTasks.push(response.data);
             setTasks(newTasks);
         }
     }
@@ -125,31 +128,34 @@ export default function Container() {
 
     return (
         <>
-        {error ? 
+            
+            {error ? 
             <>
                 <p>Aplicación fuera de servicio</p>
                 <p>Código: {error.code}</p>
-            </>: null}
-        {tasks ? 
-        <>
-            <div className="title">
-                <h1>To do App</h1>
-            </div>
-            <div className='container'>
-                <div className="submit">
-                    <div className="submit-label">
-                        <label>¿Qué tarea deseas agregar?</label>
+            </>:             
+            <>
+                <div className="title">
+                    <h1>To do App</h1>
+                </div>
+                <div className='container'>
+                    <div className="submit">
+                        <div className="submit-label">
+                            <label>¿Qué tarea deseas agregar?</label>
+                        </div>
+                        <Submit addTask={addTask} />
                     </div>
-                    <Submit addTask={addTask} lastId={tasks.slice(0)[0].id}  />
+                    <div className="container-tasks">
+                        {tasks.length===0 ? <p>No hay tareas</p> : 
+                            <>
+                                {tasks.map( (task) => (
+                                    <Tasks key={task.id} task={task} toggleCompleted={updateCompleted} deleteTask={deleteTask} editTask={editTask} />
+                                ))}
+                            </>
+                        }
+                    </div>
                 </div>
-                <div className="container-tasks">
-                    {tasks.map( (task) => (
-                        <Tasks key={task.id} task={task} toggleCompleted={updateCompleted} deleteTask={deleteTask} editTask={editTask} />
-                        )
-                    )}
-                </div>
-            </div>
-        </>: null}
-    </>
+            </>}
+        </>
     )
 };
