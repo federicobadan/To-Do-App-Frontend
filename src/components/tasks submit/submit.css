@@ -1,12 +1,5 @@
-.submit {
-    margin: 50px auto 50px auto;
-    width: 50%;
-    outline:2px solid black;
-    border-radius: 5px;
-    outline-offset: 0.5rem;
-}
 .submit-label {
-    margin-bottom: 20px;
+    text-align: center;
 }
 .submit-label label {
     font-size: 25px;
@@ -15,12 +8,33 @@
     display:flex;
     flex-direction:row;
     flex-wrap: nowrap;
+    justify-content: space-between;
 }
+
 .submit-input input {
+    color:white;
     width:80%;
-    margin:2px;
+    border: none;
+    border-radius: 10px;
+    outline: 0.15rem solid white;
+    background-color: rgba(0, 0, 0, 0);
+    padding:0;
+    font-size: 25px;
+    text-align: center;
 }
+
 .submit-input button {
-    width:20%;
-    margin:2px;
+    width:15%;
+    border: none;
+    border-radius: 10px;
+    outline: 0.15rem solid white;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background 0.5s ease;
+    color:white;
+    text-align: center;
+    cursor: pointer;
+}
+.submit-input button:hover {
+    background-color: rgba(221, 2, 146, 0.7);
+    transition: background 0.5s ease;
 }

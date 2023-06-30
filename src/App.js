@@ -1,7 +1,9 @@
+import './App.css';
 import Container from './components/tasks container/container.js';
+
 function App() {
   return (
-    <div className="app">
+    <div className="app" >
       <Container />
     </div>
   );

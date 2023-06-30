@@ -1,30 +1,63 @@
 
 .tasks {
     width: 100%;
-    margin:auto auto 15px auto;
+    height: 60px;
+    margin: auto auto 15px auto;
     display:flex;
     flex-direction:row;
-    border-bottom: 1px solid black;
-
+    border-radius: 10px;
 }
 
 .div-checkbox {
-    width: 5%;
+    width: 10%;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 10px 0px 0px 10px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
 }
 .div-checkbox input {
-    margin: 5px;
+    width: 20px;
+    height: 20px;
 }
 .div-task{ 
     width: 70%;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 0px 10px 10px 0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 .div-task p {
-    margin:0;
+    font-size: 25px;
 }
 .div-buttons {
-    width:25%;    
+    width:20%;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 .div-buttons button {
-    width: 50%;
+    width: 45%;
+    height: 95%;
+    border: none;
+    outline: 0.15rem solid white;
+    background-color: rgba(0, 0, 0, 0.75);
+    color:white;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.5s ease;
 }
 
-
+.div-buttons button:nth-child(odd) {
+    border-radius: 10px 0px 0px 10px;
+}
+.div-buttons button:nth-child(even) {
+    border-radius: 0px 10px 10px 0px;
+}
+.div-buttons button:hover {
+    background-color: rgba(221, 2, 146, 0.7);
+    transition: background 0.5s ease;
+}

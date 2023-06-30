@@ -1,9 +1,8 @@
 import './tasks.css';
 import {useState} from 'react';
-import Submit from "../tasks submit/submit";
 import Edit from "../tasks edit/edit"
-// import { useEffect } from 'react';
-// import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
 export default function Tasks({task, toggleCompleted, deleteTask, editTask}) {
@@ -30,7 +29,7 @@ export default function Tasks({task, toggleCompleted, deleteTask, editTask}) {
                 <Edit currentTask={task.task} editTask={editTask} currentId={task.id} isEditing={isEditing} changeOnEdit={handleOnEditing}/>
                 :
                 <div className="tasks">
-
+                    
                     <div className="div-checkbox">
                         <input type="checkbox" name="myCheckbox" defaultChecked={completed} onClick={handleCheckbox}/>
                     </div>
@@ -40,8 +39,8 @@ export default function Tasks({task, toggleCompleted, deleteTask, editTask}) {
                     </div>
 
                     <div className="div-buttons">
-                        <button onClick={handleOnEditing}>Editar</button>
-                        <button onClick={() => deleteComponent(task.id)}>Borrar</button>
+                        <button onClick={handleOnEditing}><FontAwesomeIcon icon={icon({name: 'pen-to-square'})} /></button>
+                        <button onClick={() => deleteComponent(task.id)}><FontAwesomeIcon icon={icon({name: 'trash'})} /></button>
                     </div>
                 </div>}
         </>

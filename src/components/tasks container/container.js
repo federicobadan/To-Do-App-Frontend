@@ -21,7 +21,6 @@ export default function Container() {
         }
         finally {
             setTasks(response.data);
-            console.log(response.data)
         }
     };
 
@@ -64,7 +63,6 @@ export default function Container() {
                 newTasks.push(task)
             });
             setTasks(newTasks);
-            console.log(response.data)
         }
     };
     const deleteTask = async (id) => {
@@ -77,7 +75,7 @@ export default function Container() {
         }
         finally {
             const newTasks = [];
-            if ((xtype(tasks))==='multi_prop_object'){
+            if (tasks.length ===1){
                 setTasks(newTasks)
             }
             else {
@@ -135,9 +133,6 @@ export default function Container() {
                 <p>Código: {error.code}</p>
             </>:             
             <>
-                <div className="title">
-                    <h1>To do App</h1>
-                </div>
                 <div className='container'>
                     <div className="submit">
                         <div className="submit-label">
@@ -146,7 +141,13 @@ export default function Container() {
                         <Submit addTask={addTask} />
                     </div>
                     <div className="container-tasks">
-                        {tasks.length===0 ? <p>No hay tareas</p> : 
+                        {tasks.length===0 ? 
+                            <>
+                                <div className="empty">
+                                    <p>No hay tareas</p>
+                                </div>
+                            </> 
+                            : 
                             <>
                                 {tasks.map( (task) => (
                                     <Tasks key={task.id} task={task} toggleCompleted={updateCompleted} deleteTask={deleteTask} editTask={editTask} />

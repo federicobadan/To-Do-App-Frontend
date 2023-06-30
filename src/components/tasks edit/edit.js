@@ -1,6 +1,8 @@
 import './edit.css';
 import {useState, useEffect, useRef} from 'react';
 import useHandleKey from '../../custom hooks/useHandleKey';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
 export default function Edit({currentId, editTask, changeOnEdit, currentTask}) {
@@ -28,10 +30,14 @@ export default function Edit({currentId, editTask, changeOnEdit, currentTask}) {
 
     return (
         <>
-            <div className="submit-input">
+            <div className="edit">
                 <input ref={ref} name="myInput" defaultValue={currentTask} onChange={onChange} />
-                <button onClick={onConfirmEdit}>Editar</button>
-                <button onClick={() => changeOnEdit()}>Cancelar</button>
+                <div className="edit-btn">
+                    <button onClick={onConfirmEdit}><FontAwesomeIcon icon={icon({name: 'right-long'})} /></button>
+                    <button onClick={() => changeOnEdit()}><FontAwesomeIcon icon={icon({name: 'X'})} /></button>
+                </div>
+                
+               
             </div>
         </>
     )
