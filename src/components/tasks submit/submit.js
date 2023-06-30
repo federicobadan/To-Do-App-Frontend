@@ -2,7 +2,7 @@ import './submit.css';
 import {useState, useEffect, useRef} from 'react';
 
 
-export default function Submit({addTask, currentId, editTask, isEditing, changeOnEdit}) {
+export default function Submit({addTask}) {
     const ref = useRef(null);
     const [task, setTask] = useState('');
     const onChange = (event) =>{
@@ -13,17 +13,12 @@ export default function Submit({addTask, currentId, editTask, isEditing, changeO
         setTask('');
     }
 
-    const onEditTask = () => {
-        editTask(currentId, task)
-        changeOnEdit()
-    }
-
     useEffect(() => {
         const element = ref.current;
         const handleEnter = (event) => {
             if(event.key==='Enter'){
                 event.preventDefault();
-                isEditing ? onEditTask() : onAddTask(task);
+                onAddTask(task);
             }
         }
         element.addEventListener('keypress', handleEnter);
@@ -36,7 +31,7 @@ export default function Submit({addTask, currentId, editTask, isEditing, changeO
         <>
             <div className="submit-input">
                 <input ref={ref} name="myInput" value={task} onChange={onChange} />
-                <button onClick={isEditing ? () => onEditTask() : () => onAddTask(task)}>{isEditing ? "Editar" : "Enviar"}</button>
+                <button onClick={() => onAddTask(task)}>Enviar</button>
             </div>
         </>
     )

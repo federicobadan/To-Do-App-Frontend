@@ -1,6 +1,7 @@
 import './tasks.css';
 import {useState} from 'react';
 import Submit from "../tasks submit/submit";
+import Edit from "../tasks edit/edit"
 // import { useEffect } from 'react';
 // import axios from 'axios';
 
@@ -26,7 +27,7 @@ export default function Tasks({task, toggleCompleted, deleteTask, editTask}) {
     return (
         <>
             {isEditing ?
-                <Submit editTask={editTask} currentId={task.id} isEditing={isEditing} changeOnEdit={handleOnEditing}/>
+                <Edit currentTask={task.task} editTask={editTask} currentId={task.id} isEditing={isEditing} changeOnEdit={handleOnEditing}/>
                 :
                 <div className="tasks">
 
