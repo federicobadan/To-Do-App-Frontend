@@ -1,40 +1,65 @@
-.submit-label {
-    text-align: center;
-}
-.submit-label label {
-    font-size: 25px;
-}
-.submit-input {
-    display:flex;
-    flex-direction:row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+@media only screen and (min-width: 200px) {
+    .submit-label {
+        text-align: center;
+    }
+    .submit-label label {
+        font-size: 23px;
+    }
+    .submit-input {
+        display:flex;
+        flex-direction:row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    
+    .submit-input input {
+        color:white;
+        width:80%;
+        border: none;
+        border-radius: 10px;
+        outline: 0.15rem solid white;
+        background-color: rgba(0, 0, 0, 0);
+        padding:0;
+        font-size: 25px;
+        text-align: center;
+    }
+    
+    .submit-input button {
+        width:15%;
+        border: none;
+        border-radius: 10px;
+        outline: 0.15rem solid white;
+        background-color: rgba(0, 0, 0, 0);
+        transition: background 0.5s ease;
+        color:white;
+        text-align: center;
+        cursor: pointer;
+    }
+    .submit-input button:hover {
+        background-color: rgba(221, 2, 146, 0.7);
+        transition: background 0.5s ease;
+    }
 }
 
-.submit-input input {
-    color:white;
-    width:80%;
-    border: none;
-    border-radius: 10px;
-    outline: 0.15rem solid white;
-    background-color: rgba(0, 0, 0, 0);
-    padding:0;
-    font-size: 25px;
-    text-align: center;
-}
-
-.submit-input button {
-    width:15%;
-    border: none;
-    border-radius: 10px;
-    outline: 0.15rem solid white;
-    background-color: rgba(0, 0, 0, 0);
-    transition: background 0.5s ease;
-    color:white;
-    text-align: center;
-    cursor: pointer;
-}
-.submit-input button:hover {
-    background-color: rgba(221, 2, 146, 0.7);
-    transition: background 0.5s ease;
+@media only screen and (min-width: 800px) {
+    /* .submit-label {
+        text-align: center;
+    } */
+    .submit-label label {
+        font-size: 25px;
+    }
+    /* .submit-input {
+        display:flex;
+        flex-direction:row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    } */
+    
+    .submit-input input {
+        width:80%;
+    }
+    
+    .submit-input button {
+        width:15%;
+    }
 }

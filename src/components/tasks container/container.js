@@ -1,9 +1,8 @@
 import './container.css';
 import Tasks from '../tasks/tasks';
 import Submit from '../tasks submit/submit';
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
-import xtype from 'xtypejs';
     
 
 export default function Container() {
@@ -24,7 +23,7 @@ export default function Container() {
         }
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
         axios
@@ -33,7 +32,7 @@ export default function Container() {
         })
         .catch((err) => {
           if (axios.isCancel(err)) {
-            console.log('successfully aborted');
+            console.log(err);
           } else {
             // handle error
           }
