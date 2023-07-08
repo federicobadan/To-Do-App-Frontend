@@ -12,7 +12,7 @@ export default function Container() {
     const getTasks = async () => {
         let response = [];
         try{
-            response = await axios.get(`http://localhost:3001/tasks`);
+            response = await axios.get(`http://localhost:3002/tasks`);
         }
         catch (error) {
             console.error(error.toJSON());
@@ -27,7 +27,7 @@ export default function Container() {
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
         axios
-        .get(`http://localhost:3001/tasks`, {
+        .get(`http://localhost:3002/tasks`, {
           cancelToken: source.token
         })
         .catch((err) => {
@@ -51,7 +51,7 @@ export default function Container() {
         const newTasks = [];
         let response = null;
         try{
-            response = await axios.patch(`http://localhost:3001/task/${id}`, { flag: !flag, info:'flag'});
+            response = await axios.patch(`http://localhost:3002/task/${id}`, { flag: !flag, info:'flag'});
         }
         catch (error) {
             console.error(error);
@@ -67,7 +67,7 @@ export default function Container() {
     const deleteTask = async (id) => {
         let response=null;
         try{
-            response = await axios.delete(`http://localhost:3001/task/${id}`)
+            response = await axios.delete(`http://localhost:3002/task/${id}`)
         }
         catch (error) {
             console.error(error);
@@ -89,7 +89,7 @@ export default function Container() {
     const addTask = async (task) => {
         let response=null;
         try{
-            response = await axios.post(`http://localhost:3001/task`, {task:`${task.task}`})
+            response = await axios.post(`http://localhost:3002/task`, {task:`${task.task}`})
         }
         catch (error) {
             console.error(error);
@@ -107,7 +107,7 @@ export default function Container() {
     const editTask = async (id, newTask) => {
         let response=null;
         try{
-         response = await axios.patch(`http://localhost:3001/task/${id}`, {task:`${newTask}`, info:'task'})
+         response = await axios.patch(`http://localhost:3002/task/${id}`, {task:`${newTask}`, info:'task'})
         }
         catch (error) {
             console.error(error);
