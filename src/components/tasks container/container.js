@@ -1,11 +1,11 @@
 import './container.css';
 import Tasks from '../tasks/tasks';
 import Submit from '../tasks submit/submit';
-import { useState, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
     
 
-export default function Container() {
+export default function Container({handleSession}) {
     let isMounted = false;
     const [tasks, setTasks] = useState([]);
     const [error, setError] = useState();
@@ -23,28 +23,53 @@ export default function Container() {
         }
     };
 
-    useLayoutEffect(() => {
-        const CancelToken = axios.CancelToken;
-        const source = CancelToken.source();
-        axios
-        .get(`http://localhost:3002/tasks`, {
-          cancelToken: source.token
-        })
-        .catch((err) => {
-          if (axios.isCancel(err)) {
-            console.log(err);
-          } else {
-            // handle error
-          }
+    // const getApi = () =>{
+    //     const CancelToken = axios.CancelToken;
+    //     const source = CancelToken.source();
+    //     axios
+    //     .get(`http://localhost:3002/tasks`, {
+    //       cancelToken: source.token
+    //     })
+    //     .catch((err) => {
+    //       if (axios.isCancel(err)) {
+    //         console.log(err);
+    //       } else {
+    //         // handle error
+    //       }
+    //     });
+    //     if (isMounted ===false){
+    //         getTasks();
+    //     }
+    //     return () => {
+    //         // cancel the request before component unmounts
+    //         source.cancel();
+    //         isMounted=true;
+    //       };
+    // }
+    useEffect(() => {
+        handleSession( () =>{
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source();
+            axios
+            .get(`http://localhost:3002/tasks`, {
+              cancelToken: source.token
+            })
+            .catch((err) => {
+              if (axios.isCancel(err)) {
+                console.log(err);
+              } else {
+                // handle error
+              }
+            });
+            if (isMounted ===false){
+                getTasks();
+            }
+            return () => {
+                // cancel the request before component unmounts
+                source.cancel();
+                isMounted=true;
+              };
         });
-        if (isMounted ===false){
-            getTasks();
-        }
-        return () => {
-            // cancel the request before component unmounts
-            source.cancel();
-            isMounted=true;
-          };
     }, []); 
 
     const updateCompleted = async (id, flag) => {

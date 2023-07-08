@@ -7,6 +7,7 @@ import axios from 'axios';
 
 function App() {
   const navigate = useNavigate();
+
   const registerUser = async (user, password, email, recoveryEmail) => {
     let response=null;
     try{
@@ -16,56 +17,77 @@ function App() {
       console.error(error);
     }
     finally {
-      console.log(response.data)
+      navigate('/login')
     }
   }
+
   const loginUser = async (user, password) => {
     const localStorageData = {
       'username': localStorage.getItem("username"),
       'email': localStorage.getItem("email"),
       'token': localStorage.getItem("token")
     }
+
     let response = null;
-    if (localStorageData.username===null && localStorageData.email===null && localStorageData.token===null){
-      try{
-        response = await axios.post(`http://localhost:3001/login`, {username:`${user}`, password: `${password}`})
-      }
-      catch (error) {
-        console.error(error);
-      }
-      finally {
-        console.log(response.data)
-        localStorage.username = response.data.username;
-        localStorage.email = response.data.email;
-        localStorage.token = response.data.token;
-        navigate("/");
-      }
+
+    try{
+      response = await axios.post(`http://localhost:3001/login`, {username:`${user}`, password: `${password}`})
     }
-    else{
-      try{
-        response = await axios.post(`http://localhost:3001/login`,  {username:`${localStorageData.username}`, email:`${localStorageData.email}`, token:`${localStorageData.token}`})
-      }
-      catch (error) {
-        console.error(error);
-      }
-      finally {
-        console.log(response.data);
-        if (response.data){
-          navigate("/");
-        }
-        if (response.data === false){
-          localStorage.removeItem("username");
-          localStorage.removeItem("email");
-          localStorage.removeItem("token");
-        }
-      }
+
+    catch (error) {
+      console.error(error);
     }
-}
+
+    finally {
+      localStorage.username = response.data.username;
+      localStorage.email = response.data.email;
+      localStorage.token = response.data.token;
+      navigate("/");
+    }
+
+  }
+
+  const checkSession = async (returnTrue) => {
+    
+    const currentPath = window.location.pathname;
+    const localStorageData = {
+      'username': localStorage.getItem("username"),
+      'email': localStorage.getItem("email"),
+      'token': localStorage.getItem("token")
+    }
+
+    let response = null;
+
+    try{
+      response = await axios.post(`http://localhost:3001/login`,  {username:`${localStorageData.username}`, token:`${localStorageData.token}`})
+    }
+    catch (error) {
+      console.error(error);
+    }
+    finally {
+
+      if (response.data){
+        returnTrue();
+      }
+
+      if (response.data === false){
+        localStorage.removeItem("username");
+        localStorage.removeItem("email");
+        localStorage.removeItem("token");
+
+        if(currentPath !== '/login' && currentPath !== '/signup'){
+          navigate("/login");
+        }
+
+      }
+
+    }
+  }
   return (
     <Routes>
-      <Route exact path='/' element={<Container />}></Route>
-      <Route exact path='/login' element={<Login handleLogin={loginUser} />}></Route>
-      <Route exact path='/signup' element={<Register handleRegister={registerUser} />}></Route>
+      <Route exact path='/' element={<Container handleSession={checkSession} />}></Route>
+      <Route exact path='/login' element={<Login handleSession={checkSession} handleLogin={loginUser} />}></Route>
+      <Route exact path='/signup' element={<Register handleSession={checkSession} handleRegister={registerUser} />}></Route>
     </Routes>
   );
 }

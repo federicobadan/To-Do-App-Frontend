@@ -1,7 +1,8 @@
 import './register.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
-import {useState, useEffect, useRef, useReducer} from 'react';
+import {useEffect, useRef, useReducer} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 const reducer = (state, action) => {
     switch(action.type) {
@@ -21,14 +22,24 @@ const reducer = (state, action) => {
     }
 }
 
-export default function Register ({handleRegister}) {
+export default function Register ({handleRegister, handleSession}) {
     const [state, dispatch] = useReducer(reducer, {user:'', password:'', email:'',recovery:''})
     const ref = useRef(null);
+    const navigate = useNavigate();
+    let isMounted = false;
 
     const sendRegister = (event) => {
         event.preventDefault();
         handleRegister(state.user, state.password, state.email, state.recovery);
     }
+
+    useEffect(()=>{
+        handleSession(() => {
+            navigate('/');
+        });
+        isMounted=true;
+    }, []);
+
     useEffect(() => {
         const element = ref.current;
         const handleEnter = (event) => {

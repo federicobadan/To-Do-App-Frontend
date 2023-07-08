@@ -2,16 +2,27 @@ import './login.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import {useState, useEffect, useRef} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-export default function Login ({handleLogin}) {
+export default function Login ({handleLogin, handleSession}) {
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const ref = useRef(null);
+    const navigate = useNavigate();
+    let isMounted = false;
+    
 
     const sendLogin = (event) => {
         event.preventDefault();
         handleLogin(user, password);
     }
+
+    useEffect(()=>{
+        handleSession(() => {
+            navigate('/');
+        });
+        isMounted=true;
+    }, []);
 
     useEffect(() => {
         const element = ref.current;
