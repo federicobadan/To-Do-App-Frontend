@@ -12,22 +12,14 @@ function App() {
     let response=null;
     try{
       response = await axios.post(`http://localhost:3001/signup`, {username:`${user}`, password: `${password}`, email:`${email}`, recoveryEmail:`${recoveryEmail}`})
+      navigate('/login');
     }
     catch (error) {
       console.error(error);
     }
-    finally {
-      navigate('/login')
-    }
   }
 
   const loginUser = async (user, password) => {
-    const localStorageData = {
-      'username': localStorage.getItem("username"),
-      'email': localStorage.getItem("email"),
-      'token': localStorage.getItem("token")
-    }
-
     let response = null;
 
     try{
@@ -39,6 +31,7 @@ function App() {
     }
 
     finally {
+      console.log(response.data)
       localStorage.username = response.data.username;
       localStorage.email = response.data.email;
       localStorage.token = response.data.token;
@@ -59,18 +52,12 @@ function App() {
     let response = null;
 
     try{
-      response = await axios.post(`http://localhost:3001/login`,  {username:`${localStorageData.username}`, token:`${localStorageData.token}`})
+      response = await axios.get(`http://localhost:3001/user-data?username=${localStorage.username}`,  {headers:{Authorization:`${localStorageData.token}`}})
+      returnTrue();
     }
     catch (error) {
       console.error(error);
-    }
-    finally {
-
-      if (response.data){
-        returnTrue();
-      }
-
-      if (response.data === false){
+      if (error.response.status === 401){
         localStorage.removeItem("username");
         localStorage.removeItem("email");
         localStorage.removeItem("token");
@@ -80,7 +67,6 @@ function App() {
         }
 
       }
-
     }
   }
   return (
@@ -88,6 +74,7 @@ function App() {
       <Route exact path='/' element={<Container handleSession={checkSession} />}></Route>
       <Route exact path='/login' element={<Login handleSession={checkSession} handleLogin={loginUser} />}></Route>
       <Route exact path='/signup' element={<Register handleSession={checkSession} handleRegister={registerUser} />}></Route>
+    
     </Routes>
   );
 }
