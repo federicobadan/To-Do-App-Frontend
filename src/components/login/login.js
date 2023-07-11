@@ -18,9 +18,11 @@ export default function Login ({handleLogin, handleSession}) {
     }
 
     useEffect(()=>{
-        handleSession(() => {
-            navigate('/');
-        });
+        if (isMounted===false){
+            handleSession(() => {
+                navigate('/');
+            });
+        }
         isMounted=true;
     }, []);
 
